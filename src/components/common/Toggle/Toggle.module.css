@@ -1,0 +1,70 @@
+.switchToggle {
+    display: flex;
+    position: relative;
+    width: 64px;
+    height: 24px;
+    border-radius: 40px;
+    border: 3px solid #f7f7f7;
+    background: #ffffff;
+    box-shadow: 15px 9px 15px #e8e8e8,
+    -15px -4px 15px #ffffff,
+    inset 9px 9px 15px #e8e8e8,
+    inset -9px -9px 15px #ffffff;
+}
+
+.roller {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: linear-gradient(#f8f8f8, #f8f8f8);
+    box-shadow: 2px 0 4px #b3b3b3, 2px 0 4px #ffffff;
+    transition: all 400ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.leftCheck, .rightCheck {
+    display: none;
+}
+
+.leftCheck:checked ~ .roller {
+    transform: translate();
+    transition: all 600ms cubic-bezier(0, 0, 0.265, 1);
+}
+
+.rightCheck:checked ~ .roller {
+    transform: translate(38px);
+    transition: all 600ms cubic-bezier(0, 0, 0.265, 1);
+    box-shadow: 0 1px 4px #b3b3b3, 0 1px 4px #ffffff;
+}
+
+.leftCheck:checked ~ .leftText {
+    color: #535353;
+}
+
+.rightCheck:checked ~ .rightText {
+    color: #535353;
+}
+
+.leftText, .rightText {
+    cursor: pointer;
+    position: absolute;
+    font-size: 22px;
+    font-weight: 600;
+    color: #0000002c;
+    transition: ease-in-out 0.4s;
+}
+
+.leftText {
+    bottom: -2px;
+    left: -34px;
+}
+
+.rightText {
+    bottom: -2px;
+    right: -34px;
+}
+
+.leftText:hover, .rightText:hover {
+    color: #63636377;
+    transition: ease-in-out 0.4s;
+}
+

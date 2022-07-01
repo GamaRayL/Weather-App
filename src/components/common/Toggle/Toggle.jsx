@@ -1,5 +1,5 @@
 import React from "react";
-import css from "./styles.module.css";
+import css from "./Toggle.module.css";
 
 export const Toggle = ({ left, right, onChange }) => {
   return (

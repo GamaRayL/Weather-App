@@ -1,3 +1,7 @@
+* {
+  margin: 0;
+}
+
 .app {
   display: flex;
   flex-direction: column;
@@ -14,28 +18,3 @@
   justify-content: space-around;
 
 }
-
-.navigation {
-  margin-top: 50px;
-  display: flex;
-  justify-content: space-between;
-  width: 860px;
-}
-
-.secondery {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  width: 600px;
-}
-
-.cardForecast {
-  margin-top: 20px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  width: 800px;
-}
-
-/* font-family: 'Dosis', sans-serif;
-font-family: 'Rubik', sans-serif; */

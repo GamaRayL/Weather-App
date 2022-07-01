@@ -1,0 +1,36 @@
+.window {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 0 auto;
+  width: 1000px;
+  height: 500px;
+  border: 12px solid #f7f7f7;
+  background: linear-gradient(145deg, #ffffff,#e6e6e6);
+  box-shadow:  29px 29px 36px #dbdbdb,
+               -29px -29px 36px #ffffff;
+}
+
+.primary__icon {
+  width: 280px;
+  height: 280px;
+}
+
+.primary__location {
+  font-size: 32px;
+  color: #535353;
+}
+
+.primary__date {
+  color: #5353538a;
+}
+
+.primary__indication {
+  text-transform: uppercase;
+  padding-left: 50px;
+}
+
+.primary__temp {
+  font-size: 102px;
+  color: #535353;
+  border-radius: 15px;
+}
