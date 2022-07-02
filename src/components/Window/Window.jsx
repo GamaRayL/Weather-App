@@ -1,14 +1,14 @@
 import { Indicator } from "components/Indicator";
 import css from "./Window.module.css";
+import array from "store/weather.json";
 
 export const Window = ({ unit, currentResponse }) => {
   if (!currentResponse) {
     return null;
   }
-  const tempC = Math.ceil(currentResponse.current.temp_c);
-  const tempF = Math.ceil(currentResponse.current.temp_f);
+  const tempC = Math.round(currentResponse.current.temp_c);
+  const tempF = Math.round(currentResponse.current.temp_f);
   const location = currentResponse.location.name;
-  const pathOfIcon = currentResponse.current.condition.icon.substr(35, 7);
   const date = new Date(currentResponse.location.localtime).toLocaleString(
     "ru",
     {
@@ -18,15 +18,23 @@ export const Window = ({ unit, currentResponse }) => {
       day: "numeric",
     }
   );
+  const time = new Date(currentResponse.location.localtime).getHours();
+  const codeReceived = currentResponse.current.condition.code;
+  const weatherItem = array.filter((item) => item.code === codeReceived);
+
+  const showWeatherIcon = () => {
+    if (time > 18 || time < 6) {
+      return weatherItem[0].night;
+    } else {
+      return weatherItem[0].day;
+    }
+  };
 
   return (
     <div className={css.window}>
       <div className={css.primary}>
         <div className={css.primary__icon}>
-          <img
-            alt="current weather icon"
-            src={`images/weatherIcons/${pathOfIcon}.svg`}
-          />
+          <img alt="current weather icon" src={showWeatherIcon()} />
         </div>
         <div className={css.primary__indication}>
           <div className={css.primary__temp}>

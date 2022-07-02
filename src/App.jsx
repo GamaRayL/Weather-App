@@ -2,8 +2,11 @@ import css from "./App.module.css";
 import { Window } from "components/Window";
 import React, { useState, useEffect } from "react";
 import { Toggle } from "components/common/Toggle";
+import { Search } from "components/Search";
 
 // TODO * Сделать новый функционал (например, прогноз на неделю). Использовать там новые пропсы
+// TODO * Сделать поиск с подсказами по городам
+// TODO * Сделать переключение по нажатию на roller
 
 function App() {
   const [unit, setUnit] = useState(true);
@@ -47,6 +50,7 @@ function App() {
         left={"°C"}
         right={"°F"}
       ></Toggle>
+      <Search setCity={setCity} />
     </div>
   );
 }

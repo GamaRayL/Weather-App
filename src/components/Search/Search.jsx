@@ -1,26 +1,24 @@
-import React, { useRef } from "react";
-import css from "./styles.module.css";
-
+import { useState } from "react";
+import css from "./Search.module.css";
 
 export const Search = ({ setCity }) => {
-  const inputRef = useRef(null);
-  const handlerEvent = (e) => {
+  const [value, setValue] = useState("");
+  const changeCity = (e) => {
     e.preventDefault();
-    console.log(inputRef.current.value);
-    setCity(inputRef.current.value);
+    setCity(value);
+    setValue("");
   };
 
   return (
-    <form className={css.search} onSubmit={handlerEvent} action="" method="get">
+    <form className={css.search} onSubmit={changeCity} method="get">
       <input
+        value={value}
         className={css.input}
-        ref={inputRef}
+        onChange={(e) => setValue(e.target.value)}
         placeholder="Введите город"
         type="text"
       />
-      <button className={css.button} onClick={handlerEvent}>
-        <img className={css.searchIcon} src="./images/search.png" alt="" width={16} height={16}/>
-      </button>
+      <button className={css.button} onClick={changeCity}></button>
     </form>
   );
 };
