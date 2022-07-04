@@ -10,7 +10,7 @@ import { Search } from "components/Search";
 
 function App() {
   const [unit, setUnit] = useState(true);
-  const [city, setCity] = useState("Санкт-Петербург");
+  const [city, setCity] = useState("Moscow");
   const [currentResponse, setCurrentResponse] = useState();
   const [forecastResponse, setForecastResponse] = useState();
 
@@ -21,7 +21,7 @@ function App() {
   useEffect(() => {
     async function getSetData() {
       const api = (value) => {
-        return `http://api.weatherapi.com/v1/${value}.json?key=a0961b2c48bd4a78a2280512221204&q=${city}&aqi=no&lang=ru`;
+        return `http://api.weatherapi.com/v1/${value}.json?key=a0961b2c48bd4a78a2280512221204&q=${city}&aqi=no`;
       };
       try {
         const respCurrent = await fetch(api("current"));
@@ -40,6 +40,8 @@ function App() {
 
   return (
     <div className={css.app}>
+      <br />
+      <br />
       <div className={css.container}>
         <Window unit={unit} city={city} currentResponse={currentResponse} />
       </div>

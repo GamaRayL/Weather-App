@@ -6,11 +6,11 @@ export const Window = ({ unit, currentResponse }) => {
   if (!currentResponse) {
     return null;
   }
-  const tempC = Math.round(currentResponse.current.temp_c);
-  const tempF = Math.round(currentResponse.current.temp_f);
-  const location = currentResponse.location.name;
-  const date = new Date(currentResponse.location.localtime).toLocaleString(
-    "ru",
+
+  const current = currentResponse.current;
+  const location = currentResponse.location;
+  const date = new Date(location.localtime).toLocaleString(
+    "en",
     {
       weekday: "long",
       year: "numeric",
@@ -18,8 +18,8 @@ export const Window = ({ unit, currentResponse }) => {
       day: "numeric",
     }
   );
-  const time = new Date(currentResponse.location.localtime).getHours();
-  const codeReceived = currentResponse.current.condition.code;
+  const time = new Date(location.localtime).getHours();
+  const codeReceived = current.condition.code;
   const weatherItem = array.filter((item) => item.code === codeReceived);
 
   const showWeatherIcon = () => {
@@ -38,10 +38,11 @@ export const Window = ({ unit, currentResponse }) => {
         </div>
         <div className={css.primary__indication}>
           <div className={css.primary__temp}>
-            {unit ? tempC : tempF}
+            {unit ? Math.round(current.temp_c) : Math.round(current.temp_f)}
             <span className={css.deg}>&deg;</span>
           </div>
-          <div className={css.primary__location}>{location}</div>
+          <div className={css.primary__city}>{location.name}</div>
+          <div className={css.primary__country}>{location.country}</div>
           <div className={css.primary__date}>{date}</div>
         </div>
       </div>

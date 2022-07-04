@@ -15,8 +15,12 @@
   height: 280px;
 }
 
-.primary__location {
+.primary__city {
   font-size: 32px;
+  color: #535353;
+}
+
+.primary__country {
   color: #535353;
 }
 
