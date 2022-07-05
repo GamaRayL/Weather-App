@@ -11,8 +11,16 @@ import { Search } from "components/Search";
 function App() {
   const [unit, setUnit] = useState(true);
   const [city, setCity] = useState("Moscow");
+  const [geonames, setGeonames] = useState();
   const [currentResponse, setCurrentResponse] = useState();
   const [forecastResponse, setForecastResponse] = useState();
+  const [valueOfCity, setValueOfCity] = useState("");
+
+  const changeCity = (e) => {
+    e.preventDefault();
+    setCity(valueOfCity);
+    setValueOfCity("");
+  };
 
   const unitChanger = () => {
     setUnit(!unit);
@@ -38,6 +46,17 @@ function App() {
     getSetData();
   }, [city]);
 
+  async function getGeonamesArray(e) {
+    try {
+      const responseData = await fetch(
+        `http://api.geonames.org/searchJSON?name_startsWith=${e}&maxRows=2&username=gama_ray`
+      );
+      setGeonames(await responseData.json());
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <div className={css.app}>
       <br />
@@ -46,13 +65,21 @@ function App() {
         <Window unit={unit} city={city} currentResponse={currentResponse} />
       </div>
       <br />
-      <Toggle
-        onClick={unitChanger}
-        onChange={unitChanger}
-        left={"°C"}
-        right={"°F"}
-      ></Toggle>
-      <Search setCity={setCity} />
+      <div className={css.container}>
+        <Toggle
+          onClick={unitChanger}
+          onChange={unitChanger}
+          left={"°C"}
+          right={"°F"}
+        ></Toggle>
+        <Search
+          setValueOfCity={setValueOfCity}
+          valueOfCity={valueOfCity}
+          getGeonamesArray={getGeonamesArray}
+          geonames={geonames}
+          changeCity={changeCity}
+        />
+      </div>
     </div>
   );
 }

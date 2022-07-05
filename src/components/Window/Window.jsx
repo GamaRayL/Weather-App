@@ -9,15 +9,12 @@ export const Window = ({ unit, currentResponse }) => {
 
   const current = currentResponse.current;
   const location = currentResponse.location;
-  const date = new Date(location.localtime).toLocaleString(
-    "en",
-    {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    }
-  );
+  const date = new Date(location.localtime).toLocaleString("en", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
   const time = new Date(location.localtime).getHours();
   const codeReceived = current.condition.code;
   const weatherItem = array.filter((item) => item.code === codeReceived);
@@ -31,7 +28,7 @@ export const Window = ({ unit, currentResponse }) => {
   };
 
   return (
-    <div className={css.window}>
+    <div className={css.window} >
       <div className={css.primary}>
         <div className={css.primary__icon}>
           <img alt="current weather icon" src={showWeatherIcon()} />

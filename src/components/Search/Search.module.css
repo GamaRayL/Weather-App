@@ -28,3 +28,29 @@
     width: 200px;
     margin-right: 5px;
 }
+
+.container {
+}
+
+.cardLoaction {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    padding: 5px;
+
+}
+
+.city, .countryCode, .countryName {
+    font-size: 22px;
+    color: #535353;
+    margin-right: 5px;
+}
+
+.countryName, .countryCode, .latitude, .longitude {
+    color: #53535379;
+}
+
+.boxLocation {
+    border-bottom: 1px solid #53535344;
+    width: 400px;
+}
