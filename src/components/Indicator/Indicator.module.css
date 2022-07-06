@@ -1,0 +1,22 @@
+.indicator {
+    display: flex;
+    color: #5353538a;
+    text-transform: uppercase;
+    font-size: 18px;
+}
+
+.box {
+    display: flex;
+    align-items: center;
+}
+
+.parameter {
+    color: #535353;
+    font-size: 24px;
+}
+
+.icon {
+    width: 52px;
+    height: 52px;
+}
+

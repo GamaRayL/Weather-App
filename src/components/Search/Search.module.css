@@ -1,35 +1,19 @@
-.search {
-    display: flex;
-    margin-bottom: 20px;
-}
-
-.button {
-    border: solid 1px;
-    border-radius: 4px;
-    background-color: #ffffff;
-    transition: 0.4s ease-in-out;
-}
-
-.searchIcon {
-    padding-top: 2px;
-}
-  
-.button:hover {
-    cursor: pointer;
-    box-shadow: 1px 1px 4px #000000;
-}
-  
 .input {
-    border: 0;
-    border-bottom: 1px solid;
-    font-style: italic;
-    font-family: "Montserrat", sans-serif;
+    border: none;
+    padding: 15px;
+    background: linear-gradient(145deg, #f3f3f3,#ebebeb);
+    box-shadow: 4px 9px 15px #e8e8e8,
+    inset 9px 9px 15px #e8e8e8,
+    inset -9px -9px 15px #ffffff;
+    color: #535353;
+    font-size: 16px;
+    width: -webkit-fill-available;
+    transition: 0.4s all;
     outline: none;
-    width: 200px;
-    margin-right: 5px;
 }
 
-.container {
+::placeholder {
+    color: #53535379;
 }
 
 .cardLoaction {
@@ -37,7 +21,18 @@
     flex-direction: column;
     margin-bottom: 10px;
     padding: 5px;
+    cursor: pointer;
+    transition: 0.4s all;
+    text-align: right;
+}
 
+.cardLoaction:hover {
+    text-shadow: 4px 9px 8px #cecdcd;
+}
+
+.cardLoaction:active {
+    transition: 0.1s all;
+    text-shadow: 4px 9px 8px #525252;
 }
 
 .city, .countryCode, .countryName {
@@ -51,6 +46,13 @@
 }
 
 .boxLocation {
-    border-bottom: 1px solid #53535344;
     width: 400px;
+}
+
+.latitude:after {
+    content: " / ";
+}
+
+.latitude, .longitude {
+   font-style: italic;
 }
