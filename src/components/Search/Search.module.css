@@ -56,3 +56,15 @@
 .latitude, .longitude {
    font-style: italic;
 }
+
+@media screen and (max-width: 600px) {
+    .container {
+      width: 100%;
+    }
+    .cardLoaction {
+        padding: 0;
+    }
+    .boxLocation {
+        width: 100%;
+    }
+}

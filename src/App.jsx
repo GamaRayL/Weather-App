@@ -4,8 +4,8 @@ import React, { useState, useEffect } from "react";
 import { Toggle } from "components/common/Toggle";
 import { Search } from "components/Search";
 
-// TODO * Сделать новый функционал (например, прогноз на неделю). Использовать там новые пропсы
-// TODO * Сделать переключение по нажатию на roller
+// TODO Расстояние между индикиторами
+// TODO Замер прогноза на день
 
 function App() {
   const [unit, setUnit] = useState(true);
@@ -13,9 +13,11 @@ function App() {
   const [geonames, setGeonames] = useState();
   const [weatherDataFromApi, setWeatherDataFromApi] = useState();
   const [valueOfCity, setValueOfCity] = useState("");
+  const [correctCity, setCorrectCity] = useState("");
 
   const changeCity = (coordinates) => {
-    setCity(coordinates);
+    setCity(coordinates.lat + "," + coordinates.lng);
+    setCorrectCity(coordinates.name);
     setValueOfCity("");
   };
 
@@ -28,8 +30,12 @@ function App() {
       const api = `http://api.weatherapi.com/v1/forecast.json?key=a0961b2c48bd4a78a2280512221204&q=${city}`;
       try {
         const response = await fetch(api);
-        const data = await response.json();
-        setWeatherDataFromApi(data);
+        if (response.status >= 400 && response.status <= 599) {
+          console.log(response.status);
+        } else {
+          const data = await response.json();
+          setWeatherDataFromApi(data);
+        }
       } catch (error) {
         console.log(error);
       }
@@ -53,18 +59,23 @@ function App() {
       <br />
       <br />
       <div className={css.container}>
-        <Window unit={unit} city={city} weatherDataFromApi={weatherDataFromApi} />
+        <Window
+          unit={unit}
+          city={city}
+          weatherDataFromApi={weatherDataFromApi}
+          correctCity={correctCity}
+        />
       </div>
-      <br />
-      <br />
       <div className={css.container}>
         <Toggle
+          weatherDataFromApi={weatherDataFromApi}
           onClick={unitChanger}
           onChange={unitChanger}
           left={"°C"}
           right={"°F"}
         ></Toggle>
         <Search
+          weatherDataFromApi={weatherDataFromApi}
           setCity={setCity}
           setValueOfCity={setValueOfCity}
           valueOfCity={valueOfCity}

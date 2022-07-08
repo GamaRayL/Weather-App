@@ -3,7 +3,7 @@ import css from "./Window.module.css";
 import array from "store/weather.json";
 import { showWind, showUv } from "components/scripts";
 
-export const Window = ({ unit, weatherDataFromApi }) => {
+export const Window = ({ unit, weatherDataFromApi, correctCity }) => {
   if (!weatherDataFromApi) {
     return null;
   }
@@ -17,23 +17,34 @@ export const Window = ({ unit, weatherDataFromApi }) => {
     month: "long",
     day: "numeric",
   });
-  const time = new Date(location.localtime).getHours();
-  const codeReceived = current.condition.code;
-  const weatherItem = array.filter((item) => item.code === codeReceived);
+  const currentHours = new Date(location.localtime).getHours();
+  const codeCurrentReceived = current.condition.code;
+  const forecastDayReceivedArray = forecastDay.hour.map((item) => item);
+  const weatherItemsArrayByHour = forecastDayReceivedArray.filter(
+    (item) => new Date(item.time).getHours() > currentHours
+  );
 
-  const showWeatherIcon = () => {
-    if (time > 18 || time < 6) {
+  const weatherItem = array.filter((item) => item.code === codeCurrentReceived);
+  const showCurrentWeatherIcon = () => {
+    if (currentHours >= 21 && currentHours <= 6) {
       return weatherItem[0].night;
     } else {
       return weatherItem[0].day;
     }
   };
 
+  const showForWholeDayWeatherIcon = (item) => {
+    const weatherItem = array.filter((el) => el.code === item.condition.code);
+    const hour = new Date(item.time).getHours();
+    if (hour >= 21 || hour <= 6) return weatherItem[0].night;
+    else return weatherItem[0].day;
+  };
+
   return (
     <div className={css.window}>
       <div className={css.primary}>
         <div className={css.primary__icon}>
-          <img alt="current weather icon" src={showWeatherIcon()} />
+          <img alt="current weather icon" src={showCurrentWeatherIcon()} />
         </div>
         <div className={css.primary__indication}>
           <div className={css.primary__temp}>
@@ -41,7 +52,9 @@ export const Window = ({ unit, weatherDataFromApi }) => {
             &deg;
           </div>
           <div className={css.primary__condition}>{current.condition.text}</div>
-          <div className={css.primary__city}>{location.name}</div>
+          <div className={css.primary__city}>
+            {correctCity ? correctCity : location.name}
+          </div>
           <div className={css.primary__country}>{location.country}</div>
           <div className={css.primary__date}>{date}</div>
         </div>
@@ -50,15 +63,29 @@ export const Window = ({ unit, weatherDataFromApi }) => {
         <div className={css.secondary__day}>
           <Indicator
             head={"Local Time"}
-            parameter={new Date(location.localtime).toLocaleString("en-US", {
+            parameter={new Date(location.localtime).toLocaleString("ru-RU", {
               hour: "numeric",
               minute: "numeric",
             })}
           />
           <Indicator
             head={"Feels like"}
-            parameter={Math.round(current.feelslike_c) + "°"}
+            parameter={
+              unit
+                ? Math.round(current.feelslike_c) + "°"
+                : Math.round(current.feelslike_f) + "°"
+            }
             img={"./images/weatherIcons/thermometer.svg"}
+          />
+          <Indicator
+            head={"Sunrise"}
+            parameter={forecastDay.astro.sunrise}
+            img={"./images/weatherIcons/sunrise.svg"}
+          />
+          <Indicator
+            head={"Sunset"}
+            parameter={forecastDay.astro.sunset}
+            img={"./images/weatherIcons/sunset.svg"}
           />
           <Indicator
             head={"Humidity"}
@@ -66,6 +93,24 @@ export const Window = ({ unit, weatherDataFromApi }) => {
             img={"./images/weatherIcons/humidity.svg"}
           />
           <Indicator
+            head={"Min temperature"}
+            parameter={
+              unit
+                ? Math.round(forecastDay.day.mintemp_c) + "°"
+                : Math.round(forecastDay.day.mintemp_f) + "°"
+            }
+            img={"./images/weatherIcons/thermometer-colder.svg"}
+          />
+          <Indicator
+            head={"Max temperature"}
+            parameter={
+              unit
+                ? Math.round(forecastDay.day.maxtemp_c) + "°"
+                : Math.round(forecastDay.day.maxtemp_f) + "°"
+            }
+            img={"./images/weatherIcons/thermometer-warmer.svg"}
+          />
+          <Indicator 
             head={"Wind speed"}
             parameter={Math.round(current.wind_mph) + " mph"}
             img={showWind(Math.round(current.wind_mph))}
@@ -81,36 +126,19 @@ export const Window = ({ unit, weatherDataFromApi }) => {
             parameter={current.uv}
             img={showUv(current.uv)}
           />
-
-          <Indicator
-            head={"Sunrise"}
-            parameter={forecastDay.astro.sunrise}
-            img={"./images/weatherIcons/sunrise.svg"}
-          />
-          <Indicator
-            head={"Sunset"}
-            parameter={forecastDay.astro.sunset}
-            img={"./images/weatherIcons/sunset.svg"}
-          />
-          <Indicator
-            head={"Minimum temperature"}
-            parameter={
-              unit
-                ? Math.round(forecastDay.day.mintemp_c)
-                : Math.round(forecastDay.day.mintemp_f)
-            }
-            img={"./images/weatherIcons/thermometer-colder.svg"}
-          />
-          <Indicator
-            head={"Maximum temperature"}
-            parameter={
-              unit
-                ? Math.round(forecastDay.day.maxtemp_c)
-                : Math.round(forecastDay.day.maxtemp_f)
-            }
-            img={"./images/weatherIcons/thermometer-warmer.svg"}
-          />
-          <div className={css.secondary__forecastDay}></div>
+        </div>
+        <div className={css.secondary__forecastDay}>
+          {weatherItemsArrayByHour.map((item) => (
+            <div className={css.secondary__todayForecast} key={item.time_epoch}>
+              <p>{new Date(item.time).getHours()}</p>
+              <img className={css.secondary__icon} width="62px" src={showForWholeDayWeatherIcon(item)} alt="" />
+              <p className={css.secondary__temp}>
+                {unit
+                  ? Math.round(item.temp_c) + "°"
+                  : Math.round(item.temp_f) + "°"}
+              </p>
+            </div>
+          ))}
         </div>
         <div className={css.secondary__forecastThreeDays}></div>
       </div>

@@ -1,31 +1,22 @@
 import React from "react";
 import css from "./Toggle.module.css";
 
-export const Toggle = ({ left, right, onChange }) => {
+export const Toggle = ({ left, right, onChange, weatherDataFromApi }) => {
+  if (!weatherDataFromApi) {
+    return null;
+  }
   return (
-    <div className={css.switchToggle}>
+    <div className={css.frame}>
+      <label htmlFor="check" className={css.switchToggle}></label>
       <input
-        className={css.leftCheck}
+        className={css.checkbox}
         onChange={onChange}
-        type="radio"
-        name="radio"
-        id="left"
-        defaultChecked
+        type="checkbox"
+        id="check"
       />
-      <label className={css.leftText} htmlFor="left">
-        {left}
-      </label>
-      <input
-        className={css.rightCheck}
-        onChange={onChange}
-        type="radio"
-        name="radio"
-        id="right"
-      />
-      <label className={css.rightText} htmlFor="right">
-        {right}
-      </label>
-      <div className={css.roller}></div>
+      <label htmlFor="check" className={css.roller}></label>
+      <span className={css.leftText}>{left}</span>
+      <span className={css.rightText}>{right}</span>
     </div>
   );
 };

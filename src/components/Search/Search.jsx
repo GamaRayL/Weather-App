@@ -6,7 +6,11 @@ export const Search = ({
   setValueOfCity,
   valueOfCity,
   changeCity,
+  weatherDataFromApi,
 }) => {
+  if (!weatherDataFromApi) {
+    return null;
+  }
   return (
     <div className={css.container}>
       <input
@@ -26,7 +30,7 @@ export const Search = ({
               <div
                 className={css.cardLoaction}
                 key={i.geonameId}
-                onClick={() => changeCity(i.lat + "," + i.lng)}
+                onClick={() => changeCity(i)}
               >
                 <div className={css.box}>
                   <span className={css.city}>{i.name}</span>

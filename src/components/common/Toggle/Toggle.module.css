@@ -1,10 +1,17 @@
-.switchToggle {
+.frame {
     display: flex;
+    justify-content: space-evenly;
+    align-items: center;
     position: relative;
+    width: 140px;
+}
+
+.switchToggle {
+    cursor: pointer;
+    display: flex;
     width: 64px;
     height: 24px;
     border-radius: 40px;
-    margin-left: 25px;
     border: 3px solid #f7f7f7;
     background: #ffffff;
     box-shadow: 15px 9px 15px #e8e8e8,
@@ -14,39 +21,38 @@
 }
 
 .roller {
+    position: absolute;
     width: 24px;
     height: 24px;
     border-radius: 50%;
     background: linear-gradient(#f8f8f8, #f8f8f8);
-    box-shadow: 2px 0 4px #b3b3b3, 2px 0 4px #ffffff;
-    transition: all 400ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    transition: all 600ms cubic-bezier(0, 0, 0.265, 1);
+    cursor: pointer;
 }
 
-.leftCheck, .rightCheck {
+.checkbox {
     display: none;
 }
 
-.leftCheck:checked ~ .roller {
-    transform: translate();
-    transition: all 600ms cubic-bezier(0, 0, 0.265, 1);
-}
-
-.rightCheck:checked ~ .roller {
-    transform: translate(38px);
-    transition: all 600ms cubic-bezier(0, 0, 0.265, 1);
+.checkbox:checked ~ .roller {
+    transform: translate(18px);
     box-shadow: 0 1px 4px #b3b3b3, 0 1px 4px #ffffff;
 }
 
-.leftCheck:checked ~ .leftText {
+.checkbox:not(:checked) ~ .roller {
+    transform: translate(-20px);
+    box-shadow: 2px 1px 4px #b3b3b3, 2px 1px 4px #ffffff;
+}
+
+.checkbox:not(:checked) ~ .leftText {
     color: #535353;
 }
 
-.rightCheck:checked ~ .rightText {
+.checkbox:checked ~ .rightText {
     color: #535353;
 }
 
 .leftText, .rightText {
-    cursor: pointer;
     position: absolute;
     font-size: 22px;
     font-weight: 600;
@@ -55,17 +61,46 @@
 }
 
 .leftText {
-    bottom: -2px;
-    left: -34px;
+    left: 0;
 }
 
 .rightText {
-    bottom: -2px;
-    right: -34px;
+    right: 0;
 }
 
-.leftText:hover, .rightText:hover {
-    color: #63636377;
-    transition: ease-in-out 0.4s;
+@media screen and (max-width: 860px) {
+    .frame {
+        width: 116px;
+    }
+    .switchToggle {
+       width: 40px;
+    }
+    .roller {
+        width: 21px;
+        height: 21px;
+    }
+    .checkbox:checked ~ .roller {
+        transform: translate(10px);
+    }
+    .checkbox:not(:checked) ~ .roller {
+        transform: translate(-10px);
+    }
+    .leftText, .rightText {
+        font-size: 18px;
+        font-weight: 600;
+    }
+    .leftText {
+        left: 10px;
+    }
+    
+    .rightText {
+        right: 10px;
+    }
 }
 
+@media screen and (max-width: 600px) {
+    .frame {
+      margin-bottom: 15px;
+    }  
+  }
+  
