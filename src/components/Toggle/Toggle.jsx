@@ -1,4 +1,3 @@
-import React from "react";
 import css from "./Toggle.module.css";
 
 export const Toggle = ({ left, right, onChange, weatherDataFromApi }) => {

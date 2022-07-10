@@ -1,11 +1,12 @@
-import { Indicator } from "components/Indicator";
-import css from "./Window.module.css";
-import array from "store/weather.json";
 import { showWind, showUv } from "components/scripts";
+import { Indicator } from "components/Indicator";
+import { TodayForecast } from "components/TodayForecast";
+import array from "store/weather.json";
+import css from "./Window.module.scss";
 
-export const Window = ({ unit, weatherDataFromApi, correctCity }) => {
+export const Window = ({ unit, weatherDataFromApi, correctCity, error }) => {
   if (!weatherDataFromApi) {
-    return null;
+    return <div className={css.error}>{error}</div>;
   }
 
   const current = weatherDataFromApi.current;
@@ -110,17 +111,12 @@ export const Window = ({ unit, weatherDataFromApi, correctCity }) => {
             }
             img={"./images/weatherIcons/thermometer-warmer.svg"}
           />
-          <Indicator 
+          <Indicator
             head={"Wind speed"}
             parameter={Math.round(current.wind_mph) + " mph"}
             img={showWind(Math.round(current.wind_mph))}
           />
           <Indicator head={"Visibility"} parameter={current.vis_km} />
-          <Indicator
-            head={"Precipitation"}
-            parameter={current.precip_mm + " mm"}
-            img={"./images/weatherIcons/raindrops.svg"}
-          />
           <Indicator
             head={"Ultraviolet index"}
             parameter={current.uv}
@@ -128,17 +124,10 @@ export const Window = ({ unit, weatherDataFromApi, correctCity }) => {
           />
         </div>
         <div className={css.secondary__forecastDay}>
-          {weatherItemsArrayByHour.map((item) => (
-            <div className={css.secondary__todayForecast} key={item.time_epoch}>
-              <p>{new Date(item.time).getHours()}</p>
-              <img className={css.secondary__icon} width="62px" src={showForWholeDayWeatherIcon(item)} alt="" />
-              <p className={css.secondary__temp}>
-                {unit
-                  ? Math.round(item.temp_c) + "°"
-                  : Math.round(item.temp_f) + "°"}
-              </p>
-            </div>
-          ))}
+          <TodayForecast
+            weatherItemsArrayByHour={weatherItemsArrayByHour}
+            showForWholeDayWeatherIcon={showForWholeDayWeatherIcon}
+          />
         </div>
         <div className={css.secondary__forecastThreeDays}></div>
       </div>

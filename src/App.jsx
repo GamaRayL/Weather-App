@@ -1,19 +1,16 @@
-import css from "./App.module.css";
-import { Window } from "components/Window";
-import React, { useState, useEffect } from "react";
-import { Toggle } from "components/common/Toggle";
-import { Search } from "components/Search";
-
-// TODO Расстояние между индикиторами
-// TODO Замер прогноза на день
+import { useState, useEffect } from "react";
+import { Window, Toggle, Search } from "components/";
+import key from "config";
+import css from "./App.module.scss";
 
 function App() {
   const [unit, setUnit] = useState(true);
   const [city, setCity] = useState("Kiev");
   const [geonames, setGeonames] = useState();
-  const [weatherDataFromApi, setWeatherDataFromApi] = useState();
+  const [weatherDataFromApi, setWeatherDataFromApi] = useState("");
   const [valueOfCity, setValueOfCity] = useState("");
   const [correctCity, setCorrectCity] = useState("");
+  const [error, setError] = useState("");
 
   const changeCity = (coordinates) => {
     setCity(coordinates.lat + "," + coordinates.lng);
@@ -27,11 +24,11 @@ function App() {
 
   useEffect(() => {
     async function getSetData() {
-      const api = `http://api.weatherapi.com/v1/forecast.json?key=a0961b2c48bd4a78a2280512221204&q=${city}`;
+      const api = `http://api.weatherapi.com/v1/forecast.json?key=${key}&q=${city}`;
       try {
         const response = await fetch(api);
         if (response.status >= 400 && response.status <= 599) {
-          console.log(response.status);
+          setError(response.status);
         } else {
           const data = await response.json();
           setWeatherDataFromApi(data);
@@ -64,6 +61,7 @@ function App() {
           city={city}
           weatherDataFromApi={weatherDataFromApi}
           correctCity={correctCity}
+          error={error}
         />
       </div>
       <div className={css.container}>

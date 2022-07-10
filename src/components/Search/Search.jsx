@@ -1,4 +1,4 @@
-import css from "./Search.module.css";
+import css from "./Search.module.scss";
 
 export const Search = ({
   geonames,

@@ -24,15 +24,15 @@
     cursor: pointer;
     transition: 0.4s all;
     text-align: right;
-}
 
-.cardLoaction:hover {
-    text-shadow: 4px 9px 8px #cecdcd;
-}
-
-.cardLoaction:active {
-    transition: 0.1s all;
-    text-shadow: 4px 9px 8px #525252;
+    &:hover {
+        text-shadow: 4px 9px 8px #cecdcd;
+    }
+    
+    &:active {
+        transition: 0.1s all;
+        text-shadow: 4px 9px 8px #525252;
+    }
 }
 
 .city, .countryCode, .countryName {
