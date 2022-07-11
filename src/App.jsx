@@ -2,7 +2,6 @@ import { useState, useEffect, useCallback, useMemo } from "react";
 import { Window, Toggle, Search } from "components/";
 import { IndicatorsArray } from "components/Indicator";
 import array from "store/weather.json";
-import key from "config";
 import css from "./App.module.scss";
 
 function App() {
@@ -23,7 +22,7 @@ function App() {
 
   useEffect(() => {
     async function getSetData() {
-      const api = `http://api.weatherapi.com/v1/forecast.json?key=${key}&q=${city}`;
+      const api = `http://api.weatherapi.com/v1/forecast.json?key=a0961b2c48bd4a78a2280512221204&q=${city}`;
       try {
         const response = await fetch(api);
         if (response.status >= 400 && response.status <= 599) {
