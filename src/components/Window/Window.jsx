@@ -1,27 +1,18 @@
-import { useMemo } from "react";
-import { showWind, showUv } from "components/statements";
 import { Indicator } from "components/Indicator";
 import { TodayForecast } from "components/TodayForecast";
-import { IndicatorsArray } from "components/Indicator";
 import css from "./Window.module.scss";
 
 export const Window = ({
   unit,
   correctCity,
   current,
-  forecastDay,
   location,
   weatherItemsArrayByHour,
   date,
   showCurrentWeatherIcon,
   showForWholeDayWeatherIcon,
+  indicatorsOfArray,
 }) => {
-  const indicatorsOfArray = useMemo(
-    () =>
-      IndicatorsArray(unit, location, current, forecastDay, showUv, showWind),
-    [current, forecastDay, location, unit]
-  );
-
   return (
     <div className={css.window}>
       <div className={css.primary}>

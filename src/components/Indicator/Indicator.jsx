@@ -1,13 +1,11 @@
+import { showWind, showUv } from "components/statements";
 import css from "./Indicator.module.scss";
 
-export const IndicatorsArray = (
-  unit,
-  current,
-  location,
-  forecastDay,
-  showUv,
-  showWind
-) => {
+export const IndicatorsArray = (weatherDataFromApi, unit) => {
+  if (!weatherDataFromApi) return [];
+  const current = weatherDataFromApi.current;
+  const forecastDay = weatherDataFromApi.forecast.forecastday[0];
+  const location = weatherDataFromApi.location;
   return [
     {
       head: "Local Time",
