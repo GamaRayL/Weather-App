@@ -1,9 +1,6 @@
 import css from "./Toggle.module.css";
 
-export const Toggle = ({ left, right, onChange, weatherDataFromApi }) => {
-  if (!weatherDataFromApi) {
-    return null;
-  }
+export const Toggle = ({ left, right, onChange }) => {
   return (
     <div className={css.frame}>
       <label htmlFor="check" className={css.switchToggle}></label>

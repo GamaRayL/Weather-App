@@ -6,11 +6,7 @@ export const Search = ({
   setValueOfCity,
   valueOfCity,
   changeCity,
-  weatherDataFromApi,
 }) => {
-  if (!weatherDataFromApi) {
-    return null;
-  }
   return (
     <div className={css.container}>
       <input

@@ -26,6 +26,12 @@ body{
   margin-bottom: 15px;
 }
 
+.error {
+  margin: 0 auto;
+  text-align: center;
+  font-size: 240px;
+}
+
 @media screen and (max-width: 600px) {
   .container {
     flex-direction: column;
