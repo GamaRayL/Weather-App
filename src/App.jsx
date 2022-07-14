@@ -54,13 +54,13 @@ function App() {
     [weatherDataFromApi, unit]
   );
 
-  const showCurrentWeatherIcon = useCallback(() => {
+  const showCurrentWeatherIcon = () => {
     if (currentHours >= 21 && currentHours <= 6) {
       return weatherItem[0].night;
     } else {
       return weatherItem[0].day;
     }
-  }, [currentHours, weatherItem]);
+  };
 
   const showForWholeDayWeatherIcon = useCallback((item) => {
     const weatherItem = array.filter((el) => el.code === item.condition.code);
